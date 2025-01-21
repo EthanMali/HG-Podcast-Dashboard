@@ -16,7 +16,8 @@
         <button id="languageSwitchBtn" class="btn btn-outline-primary mb-4" onclick="openLanguageModal()">
             <i class="fas fa-language"></i> Switch Language
         </button>
-
+    
+        <!-- Tab Navigation -->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
@@ -29,76 +30,24 @@
                 </a>
             </li>
         </ul>
+    
+        <!-- Tab Content -->
         <div class="tab-content mt-4">
-        <!-- Video Gallery Section -->
-
-            <script>
-                // Function to dynamically set the thumbnail and video ID
-                document.querySelectorAll('a[data-bs-toggle="modal"]').forEach(item => {
-                    item.addEventListener('click', function(e) {
-                        const videoId = e.target.closest('a').getAttribute('data-video');
-                        
-                        // Set the YouTube video thumbnail URL (default high-quality thumbnail)
-                        const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-                        const thumbnailImage = e.target.closest('a').querySelector('img');
-                        thumbnailImage.src = thumbnailUrl;
-                        
-                        // Set the YouTube embed URL in the modal iframe
-                        const videoPlayer = document.getElementById('modalVideo');
-                        videoPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-                    });
-                });
-
-                // Reset the iframe source when the modal is closed to stop the video from playing
-                $('#videoModal').on('hidden.bs.modal', function () {
-                    $('#modalVideo').attr('src', '');
-                });
-
-
-                // Event listener to show/hide content when switching tabs
-                $('#myTab a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
-                    // When "Logbook" tab is clicked
-                    if (e.target.id === 'logbook-tab') {
-                        // Hide video section and show logbook content
-                        document.querySelector('.video-gallery').style.display = 'none';
-                        document.querySelector('.tab-pane#logbook').style.display = 'block';
-                    } 
-                    // When "HG Podcast" tab is clicked
-                    else if (e.target.id === 'home-tab') {
-                        // Show video section and hide logbook content
-                        document.querySelector('.video-gallery').style.display = 'block';
-                        document.querySelector('.tab-pane#logbook').style.display = 'none';
-                    }
-                });
-            </script>
-
-            
-            <!-- Example Video Thumbnail with YouTube ID -->
-            <div class="col-md-6 mb-4 video-gallery">
-                <a href="https://www.youtube.com/watch?v=WY5XG931mkQ" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="WY5XG931mkQ">
-                    <img src="https://img.youtube.com/vi/WY5XG931mkQ/hqdefault.jpg" class="img-fluid rounded" alt="Episode 1 Thumbnail">
-                    <p class="text-center mt-2">Episode 1</p>
-                </a>
-            </div>
-            
-            
-            <!-- Modal for Video -->
-            <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="videoModalLabel">Episode Video</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <iframe id="modalVideo" class="w-100" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                        </div>
+            <!-- HG Podcast Tab Content -->
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <!-- Video Gallery Section -->
+                <div class="video-gallery">
+                    <div class="podcast-video-container">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="WY5XG931mkQ" class="video-thumbnail-link">
+                            <div class="video-thumbnail-container">
+                                <img src="https://img.youtube.com/vi/WY5XG931mkQ/hqdefault.jpg" class="img-fluid rounded video-thumbnail" alt="Episode 1 Thumbnail">
+                            </div>
+                        </a>
+                        <p class="video-label">Episode 1 (Unlisted)</p>
                     </div>
                 </div>
             </div>
-
-        
-        
+    
             <!-- Logbook Tab Content -->
             <div class="tab-pane fade" id="logbook" role="tabpanel" aria-labelledby="logbook-tab">
                 <h2 class="text-center mb-4" id="logbookTitle">Podcast Logbook</h2>
@@ -107,7 +56,7 @@
                         <i class="fas fa-plus-circle"></i> Add New Logbook Entry
                     </button>
                 </div>
-
+    
                 <!-- Logbook Table -->
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered shadow-sm rounded">
@@ -126,9 +75,144 @@
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </div>
+    
+        <!-- Modal for Video -->
+        <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="videoModalLabel">Episode Video</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <iframe id="modalVideo" class="w-100 rounded shadow video-iframe" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Modal for Adding Logbook Entry -->
+        <div class="modal fade" id="addLogModal" tabindex="-1" aria-labelledby="addLogModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addLogModalLabel">Add Logbook Entry</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addLogForm">
+                            <div class="mb-3">
+                                <label for="podcastNumber" class="form-label">Podcast #</label>
+                                <input type="text" class="form-control" id="podcastNumber" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="guest" class="form-label">Guest</label>
+                                <input type="text" class="form-control" id="guest" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="host" class="form-label">Host</label>
+                                <input type="text" class="form-control" id="host" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="crew" class="form-label">Crew</label>
+                                <input type="text" class="form-control" id="crew" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="date" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="date" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="notes" class="form-label">Notes</label>
+                                <textarea class="form-control" id="notes" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100">Add Entry</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Updated Styles -->
+    <style>
+        .podcast-video-container {
+            display: inline-block;
+            text-align: center;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+    
+        .video-label {
+            font-size: 1rem;
+            color: #c9c9c9;
+            margin-top: 0.5rem;
+        }
+    
+        .video-thumbnail-container {
+            position: relative;
+            display: block;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+    
+        .video-thumbnail-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+    
+        .video-thumbnail {
+            width: 100%;
+            display: block;
+        }
+    
+        .modal-xl {
+            max-width: 90%;
+        }
+    
+        .video-iframe {
+            height: 60vh;
+            min-height: 350px;
+        }
+    </style>
+    
+    <!-- Updated JavaScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Tab content toggling
+            const videoSection = document.querySelector("#home");
+            const logbookSection = document.querySelector("#logbook");
+    
+            document.querySelectorAll('#myTab a[data-bs-toggle="tab"]').forEach(tab => {
+                tab.addEventListener('shown.bs.tab', (e) => {
+                    if (e.target.id === "logbook-tab") {
+                        videoSection.classList.remove("active", "show");
+                        logbookSection.classList.add("active", "show");
+                    } else if (e.target.id === "home-tab") {
+                        logbookSection.classList.remove("active", "show");
+                        videoSection.classList.add("active", "show");
+                    }
+                });
+            });
+    
+            // Video modal logic
+            document.querySelectorAll('[data-bs-toggle="modal"]').forEach(item => {
+                item.addEventListener("click", function () {
+                    const videoId = this.getAttribute("data-video");
+                    const iframe = document.getElementById("modalVideo");
+                    iframe.src = "https://www.youtube.com/embed/" + videoId + "?autoplay=1";
+                });
+            });
+    
+            document.getElementById("videoModal").addEventListener("hidden.bs.modal", function () {
+                const iframe = document.getElementById("modalVideo");
+                iframe.src = "";
+            });
+        });
+    </script>
+    
 
         <!-- Language Selection Modal -->
         <div class="modal fade" id="languageModal" tabindex="-1" aria-labelledby="languageModalLabel" aria-hidden="true">
