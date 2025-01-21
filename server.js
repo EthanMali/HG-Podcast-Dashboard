@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const bcrypt = require('bcrypt'); // For password hashing
+const fs = require('fs'); // For file system operations
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -11,52 +13,73 @@ app.use(express.json()); // For parsing JSON requests
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Hardcoded login credentials
+// Mock user database with hashed passwords
 const users = [
-    { username: 'Ethan', password: 'HGpodcast' },
-    { username: 'Alex', password: 'HGpodcast' },
-    { username: 'Aleksey', password: 'HGpodcast' },
-    { username: 'Pavel', password: 'HGpodcast' }
+    { username: 'Ethan', password: bcrypt.hashSync('HGpodcast', 10) },
+    { username: 'Alex', password: bcrypt.hashSync('HGpodcast', 10) },
+    { username: 'Aleksey', password: bcrypt.hashSync('HGpodcast', 10) },
+    { username: 'Pavel', password: bcrypt.hashSync('HGpodcast', 10) }
 ];
 
-// In-memory logbook entries
-const logbookEntries = [
+// Path to the logbook JSON file
+const logbookFilePath = path.join(__dirname, 'data.json');
 
-];
-
-// Handle the login request
-app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-
-    // Check if the username and password are correct
-    const user = users.find(u => u.username === username && u.password === password);
-
-    if (user) {
-        res.status(200).send('Login successful');
+// Function to load logbook entries from JSON file
+function loadLogbookEntries() {
+    if (fs.existsSync(logbookFilePath)) {
+        try {
+            const rawData = fs.readFileSync(logbookFilePath);
+            return JSON.parse(rawData);
+        } catch (err) {
+            console.error("Error loading logbook data:", err);
+            return [];
+        }
     } else {
-        res.status(401).send('Invalid username or password');
+        return [];
+    }
+}
+
+// Function to save logbook entries to the JSON file
+function saveLogbookEntries(logbookEntries) {
+    try {
+        fs.writeFileSync(logbookFilePath, JSON.stringify(logbookEntries, null, 2));
+        console.log("Logbook entries saved successfully.");
+    } catch (err) {
+        console.error("Error saving logbook data:", err);
+    }
+}
+
+// In-memory logbook entries, initially loaded from the JSON file
+let logbookEntries = loadLogbookEntries();
+
+// Login route
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+    const user = users.find(u => u.username === username);
+    if (user && (await bcrypt.compare(password, user.password))) {
+        res.status(200).json({ message: 'Login successful' });
+    } else {
+        res.status(401).json({ message: 'Invalid username or password' });
     }
 });
 
-// Middleware to parse JSON data
-app.use(express.json());
-
-// Endpoint to fetch all logbook entries
+// Fetch all logbook entries
 app.get('/api/logbook', (req, res) => {
-    res.json(logbookEntries);  // Send the logbook entries as a JSON response
+    res.json(logbookEntries);
 });
 
-// Endpoint to add a logbook entry
+// Add a logbook entry
 app.post('/api/logbook', (req, res) => {
     const newLogEntry = req.body;
-    logbookEntries.push(newLogEntry);  // Add the new log entry to the array
-    res.status(201).json(logbookEntries);  // Return all log entries after adding
+    logbookEntries.push(newLogEntry);
+    saveLogbookEntries(logbookEntries); // Save to JSON file
+    res.status(201).json(logbookEntries);
 });
 
-// Serve static files for the frontend (if needed)
-app.use(express.static('public'));
-
-
+// Fallback route for frontend
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // Start the server
 app.listen(PORT, () => {
