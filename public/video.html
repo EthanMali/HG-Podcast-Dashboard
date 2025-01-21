@@ -69,7 +69,7 @@
             
             <!-- Example Video Thumbnail with YouTube ID -->
             <div class="col-md-6 mb-4 video-gallery">
-                <a href="#" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="YOUR_YOUTUBE_VIDEO_ID">
+                <a href="https://www.youtube.com/watch?v=WY5XG931mkQ" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="WY5XG931mkQ">
                     <img src="" class="img-fluid rounded" alt="Episode 1 Thumbnail">
                     <p class="text-center mt-2">Episode 1</p>
                 </a>
@@ -286,7 +286,7 @@
 
             try {
                 // Send the logbook entry to the backend
-                const response = await fetch('https://hg-podcast-dashboard.onrender.com/api/logbook', {
+                const response = await fetch('http://localhost:5000/api/logbook', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -317,7 +317,7 @@
         // Fetch logbook entries from the server on page load
         async function fetchLogbookEntries() {
             try {
-                const response = await fetch('https://hg-podcast-dashboard.onrender.com/api/logbook');
+                const response = await fetch('http://localhost:5000/api/logbook');
                 if (response.ok) {
                     const logbookEntries = await response.json();
                     updateLogbookTable(logbookEntries);  // Update the logbook table with the fetched data
