@@ -43,11 +43,17 @@
                         const thumbnailImage = e.target.closest('a').querySelector('img');
                         thumbnailImage.src = thumbnailUrl;
                         
-                        // Set the YouTube embed URL in the modal
+                        // Set the YouTube embed URL in the modal iframe
                         const videoPlayer = document.getElementById('modalVideo');
                         videoPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
                     });
                 });
+
+                // Reset the iframe source when the modal is closed to stop the video from playing
+                $('#videoModal').on('hidden.bs.modal', function () {
+                    $('#modalVideo').attr('src', '');
+                });
+
 
                 // Event listener to show/hide content when switching tabs
                 $('#myTab a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -90,6 +96,7 @@
                     </div>
                 </div>
             </div>
+
         
         
             <!-- Logbook Tab Content -->
