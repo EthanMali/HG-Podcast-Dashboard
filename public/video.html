@@ -317,7 +317,7 @@
         // Fetch logbook entries from the server on page load
         async function fetchLogbookEntries() {
             try {
-                const response = await fetch('http://localhost:5000/api/logbook');
+                const response = await fetch('https://hg-podcast-dashboard.onrender.com/api/logbook');
                 if (response.ok) {
                     const logbookEntries = await response.json();
                     updateLogbookTable(logbookEntries);  // Update the logbook table with the fetched data
