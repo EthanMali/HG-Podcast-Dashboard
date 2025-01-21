@@ -1,0 +1,33 @@
+{
+    "en": {
+      "languageSwitch": "Switch Language",
+      "homeTab": "HG Podcast",
+      "logbookTab": "Logbook",
+      "videoModalLabel": "Episode Video",
+      "logbookTitle": "Podcast Logbook",
+      "addRowBtn": "Add New Logbook Entry",
+      "podcastNumber": "Podcast #",
+      "guest": "Guest",
+      "host": "Host",
+      "crew": "Crew",
+      "date": "Date",
+      "notes": "Notes",
+      "addEntryBtn": "Add Entry"
+    },
+    "es": {
+      "languageSwitch": "Cambiar Idioma",
+      "homeTab": "Podcast HG",
+      "logbookTab": "Libro de Registros",
+      "videoModalLabel": "Video del Episodio",
+      "logbookTitle": "Libro de Registros del Podcast",
+      "addRowBtn": "Añadir Nueva Entrada al Libro de Registros",
+      "podcastNumber": "Podcast #",
+      "guest": "Invitado",
+      "host": "Anfitrión",
+      "crew": "Equipo",
+      "date": "Fecha",
+      "notes": "Notas",
+      "addEntryBtn": "Añadir Entrada"
+    }
+  }
+  

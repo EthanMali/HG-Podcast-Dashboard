@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Preview Portal with Logbook</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="fadeIn">
+    <div class="container mt-5">
+        <!-- Language Switch Button -->
+        <button id="languageSwitchBtn" class="btn btn-outline-primary mb-4" onclick="openLanguageModal()">
+            <i class="fas fa-language"></i> Switch Language
+        </button>
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+                    <i class="fas fa-video"></i> HG Podcast
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="logbook-tab" data-bs-toggle="tab" href="#logbook" role="tab" aria-controls="logbook" aria-selected="false">
+                    <i class="fas fa-book"></i> Logbook
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content mt-4">
+        <!-- Video Gallery Section -->
+
+            <script>
+                // Function to dynamically set the thumbnail and video ID
+                document.querySelectorAll('a[data-bs-toggle="modal"]').forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        const videoId = e.target.closest('a').getAttribute('data-video');
+                        
+                        // Set the YouTube video thumbnail URL (default high-quality thumbnail)
+                        const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+                        const thumbnailImage = e.target.closest('a').querySelector('img');
+                        thumbnailImage.src = thumbnailUrl;
+                        
+                        // Set the YouTube embed URL in the modal
+                        const videoPlayer = document.getElementById('modalVideo');
+                        videoPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                    });
+                });
+
+                // Event listener to show/hide content when switching tabs
+                $('#myTab a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+                    // When "Logbook" tab is clicked
+                    if (e.target.id === 'logbook-tab') {
+                        // Hide video section and show logbook content
+                        document.querySelector('.video-gallery').style.display = 'none';
+                        document.querySelector('.tab-pane#logbook').style.display = 'block';
+                    } 
+                    // When "HG Podcast" tab is clicked
+                    else if (e.target.id === 'home-tab') {
+                        // Show video section and hide logbook content
+                        document.querySelector('.video-gallery').style.display = 'block';
+                        document.querySelector('.tab-pane#logbook').style.display = 'none';
+                    }
+                });
+            </script>
+
+            
+            <!-- Example Video Thumbnail with YouTube ID -->
+            <div class="col-md-6 mb-4 video-gallery">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="YOUR_YOUTUBE_VIDEO_ID">
+                    <img src="" class="img-fluid rounded" alt="Episode 1 Thumbnail">
+                    <p class="text-center mt-2">Episode 1</p>
+                </a>
+            </div>
+            
+            <!-- Modal for Video -->
+            <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="videoModalLabel">Episode Video</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <iframe id="modalVideo" class="w-100" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        
+            <!-- Logbook Tab Content -->
+            <div class="tab-pane fade" id="logbook" role="tabpanel" aria-labelledby="logbook-tab">
+                <h2 class="text-center mb-4" id="logbookTitle">Podcast Logbook</h2>
+                <div class="container mt-4">
+                    <button id="addRowBtn" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addLogModal">
+                        <i class="fas fa-plus-circle"></i> Add New Logbook Entry
+                    </button>
+                </div>
+
+                <!-- Logbook Table -->
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered shadow-sm rounded">
+                        <thead class="thead-dark bg-primary text-white">
+                            <tr>
+                                <th id="podcastNumberHeader">Podcast #</th>
+                                <th id="guestHeader">Guest</th>
+                                <th id="hostHeader">Host</th>
+                                <th id="crewHeader">Crew</th>
+                                <th id="dateHeader">Date</th>
+                                <th id="notesHeader">Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logbookBody">
+                            <!-- Rows will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Language Selection Modal -->
+        <div class="modal fade" id="languageModal" tabindex="-1" aria-labelledby="languageModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="languageModalLabel">Select Language</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <button class="btn btn-primary w-100" onclick="switchLanguage('en')">English</button>
+                        <button class="btn btn-primary w-100 mt-3" onclick="switchLanguage('ru')">Russian</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal for Adding Logbook Entry -->
+        <div class="modal fade" id="addLogModal" tabindex="-1" aria-labelledby="addLogModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addLogModalLabel">Add Logbook Entry</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addLogForm">
+                            <div class="mb-3">
+                                <label for="podcastNumber" class="form-label">Podcast #</label>
+                                <input type="text" class="form-control" id="podcastNumber" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="guest" class="form-label">Guest</label>
+                                <input type="text" class="form-control" id="guest" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="host" class="form-label">Host</label>
+                                <input type="text" class="form-control" id="host" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="crew" class="form-label">Crew</label>
+                                <input type="text" class="form-control" id="crew" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="date" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="date" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="notes" class="form-label">Notes</label>
+                                <textarea class="form-control" id="notes" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100">Add Entry</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Fetch the translations from the JSON file
+        const translations = {
+            "en": {
+                "languageSwitch": "Switch Language",
+                "homeTab": "HG Podcast",
+                "logbookTab": "Logbook",
+                "videoModalLabel": "Episode Video",
+                "logbookTitle": "Podcast Logbook",
+                "addRowBtn": "Add New Logbook Entry",
+                "podcastNumber": "Podcast #",
+                "guest": "Guest",
+                "host": "Host",
+                "crew": "Crew",
+                "date": "Date",
+                "notes": "Notes",
+                "addEntryBtn": "Add Entry"
+            },
+            "ru": {
+                "languageSwitch": "Переключить язык",
+                "homeTab": "HG Подкаст",
+                "logbookTab": "Журнал",
+                "videoModalLabel": "Видео эпизода",
+                "logbookTitle": "Журнал подкастов",
+                "addRowBtn": "Добавить новую запись в журнал",
+                "podcastNumber": "Номер подкаста",
+                "guest": "Гость",
+                "host": "Ведущий",
+                "crew": "Экипаж",
+                "date": "Дата",
+                "notes": "Заметки",
+                "addEntryBtn": "Добавить запись"
+            }
+        };
+
+        // Default language is English
+        let currentLanguage = localStorage.getItem('language') || 'en'; // Check localStorage for language
+
+        // Function to switch language
+        function switchLanguage(language) {
+            currentLanguage = language;
+            localStorage.setItem('language', language); // Save language to localStorage
+            updateText();
+        }
+
+        // Function to update text based on the selected language
+        function updateText() {
+            document.getElementById('languageSwitchBtn').textContent = translations[currentLanguage].languageSwitch;
+            document.getElementById('home-tab').textContent = translations[currentLanguage].homeTab;
+            document.getElementById('logbook-tab').textContent = translations[currentLanguage].logbookTab;
+            document.getElementById('videoModalLabel').textContent = translations[currentLanguage].videoModalLabel;
+            document.getElementById('logbookTitle').textContent = translations[currentLanguage].logbookTitle;
+            
+            document.getElementById('addRowBtn').textContent = translations[currentLanguage].addRowBtn;
+            document.getElementById('podcastNumber').placeholder = translations[currentLanguage].podcastNumber;
+            document.getElementById('guest').placeholder = translations[currentLanguage].guest;
+            document.getElementById('host').placeholder = translations[currentLanguage].host;
+            document.getElementById('crew').placeholder = translations[currentLanguage].crew;
+            document.getElementById('date').placeholder = translations[currentLanguage].date;
+            document.getElementById('notes').placeholder = translations[currentLanguage].notes;
+            document.querySelector('button[type="submit"]').textContent = translations[currentLanguage].addEntryBtn;
+
+            // Translate table headers
+            document.getElementById('podcastNumberHeader').textContent = translations[currentLanguage].podcastNumber;
+            document.getElementById('guestHeader').textContent = translations[currentLanguage].guest;
+            document.getElementById('hostHeader').textContent = translations[currentLanguage].host;
+            document.getElementById('crewHeader').textContent = translations[currentLanguage].crew;
+            document.getElementById('dateHeader').textContent = translations[currentLanguage].date;
+            document.getElementById('notesHeader').textContent = translations[currentLanguage].notes;
+        }
+
+        // Initialize text based on the stored or default language
+        updateText();
+
+        // Set the language switcher button functionality
+        document.getElementById('languageSwitchBtn').addEventListener('click', () => {
+            const newLanguage = currentLanguage === 'en' ? 'ru' : 'en';
+            switchLanguage(newLanguage);
+        });
+
+        // Handle form submission
+        document.getElementById('addLogForm').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get form values
+            const podcastNumber = document.getElementById('podcastNumber').value;
+            const guest = document.getElementById('guest').value;
+            const host = document.getElementById('host').value;
+            const crew = document.getElementById('crew').value;
+            const date = document.getElementById('date').value;
+            const notes = document.getElementById('notes').value;
+
+            // Prepare the logbook entry object
+            const newLogEntry = {
+                podcastNumber,
+                guest,
+                host,
+                crew,
+                date,
+                notes
+            };
+
+            try {
+                // Send the logbook entry to the backend
+                const response = await fetch('http://localhost:5000/api/logbook', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newLogEntry)
+                });
+
+                // Check if the request was successful
+                if (response.ok) {
+                    // Reset the form after submission
+                    document.getElementById('addLogForm').reset();
+
+                    // Optionally, you can update the logbook table without reloading the page
+                    const data = await response.json();
+                    updateLogbookTable(data);  // Update table with the new entry
+
+                    alert('Logbook entry added successfully!');
+                } else {
+                    const errorText = await response.text();
+                    alert('Error: ' + errorText);
+                }
+            } catch (error) {
+                console.error('Error submitting logbook entry:', error);
+                alert('An error occurred. Please try again.');
+            }
+        });
+
+        // Fetch logbook entries from the server on page load
+        async function fetchLogbookEntries() {
+            try {
+                const response = await fetch('http://localhost:5000/api/logbook');
+                if (response.ok) {
+                    const logbookEntries = await response.json();
+                    updateLogbookTable(logbookEntries);  // Update the logbook table with the fetched data
+                } else {
+                    console.error('Failed to fetch logbook entries:', response.status);
+                }
+            } catch (error) {
+                console.error('Error fetching logbook entries:', error);
+            }
+        }
+
+        // Function to update the logbook table after fetching data
+        function updateLogbookTable(logbookEntries) {
+            const logbookBody = document.getElementById('logbookBody');
+            logbookBody.innerHTML = ''; // Clear the table before updating it
+
+            logbookEntries.forEach(entry => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${entry.podcastNumber}</td>
+                    <td>${entry.guest}</td>
+                    <td>${entry.host}</td>
+                    <td>${entry.crew}</td>
+                    <td>${entry.date}</td>
+                    <td>${entry.notes}</td>
+                `;
+                logbookBody.appendChild(row);
+            });
+        }
+
+        // Call fetchLogbookEntries on page load to get the latest logbook entries
+        window.addEventListener('load', fetchLogbookEntries);
+
+                
+
+    </script>
+</body>
+</html>

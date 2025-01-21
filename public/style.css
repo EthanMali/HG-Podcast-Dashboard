@@ -1,0 +1,214 @@
+        /* General Styling */
+        body {
+            background-color: #414141;
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin-top: 50px;
+        }
+
+        /* Language Switch Button */
+        #languageSwitchBtn {
+            background: #406dff;
+            color: #fff;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 12px 25px;
+            border-radius: 50px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        #languageSwitchBtn:hover {
+            background: #0400f5;
+            transform: translateY(-4px);
+        }
+
+        /* Tab Styling */
+        .nav-tabs {
+            background: #333;
+            border-radius: 20px;
+            padding: 10px 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-link {
+            color: #ddd;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 12px 20px;
+            text-transform: uppercase;
+        }
+
+        .nav-link.active {
+            background: #50aaff;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 64, 255, 0.5);
+        }
+
+        /* Video Section */
+        .video-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 30px;
+        }
+
+        .video-list li {
+            background: #222;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .video-list li:hover {
+            background: #4099ff;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-list a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .video-list a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .modal-header {
+            background: #4083ff;
+            color: #fff;
+            border-bottom: 2px solid #0072f5;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .modal-body {
+            background: #333;
+            color: #fff;
+        }
+
+        /* Logbook Styling */
+        .logbook-table {
+            width: 100%;
+            margin-top: 30px;
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .logbook-table th, .logbook-table td {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .logbook-table th {
+            background: #333;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .logbook-table td {
+            background: #444;
+            color: #fff;
+            font-size: 14px;
+            border-top: 2px solid #555;
+        }
+
+        .logbook-table td[contenteditable="true"]:focus {
+            background: #4053ff;
+            color: #fff;
+        }
+
+        /* Animations */
+        .fadeIn {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Modal Animation */
+        .modal.fade .modal-dialog {
+            transform: translate(0, -50px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .modal.fade.show .modal-dialog {
+            transform: translate(0, 0);
+            opacity: 1;
+        }
+
+
+        /* Logbook Styling */
+.table {
+    border-radius: 8px;
+    margin-top: 20px;
+    background-color: #a8a8a8;
+}
+
+.table thead {
+    background-color: #007bff;
+}
+
+.table tbody tr:hover {
+    background-color: #f0f8ff2f;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+    text-align: center;
+    padding: 12px;
+}
+
+.btn-outline-primary {
+    border-radius: 50px;
+    border: 1px solid #007bff;
+}
+
+.btn-primary {
+    border-radius: 50px;
+}
+
+.modal-content {
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(156, 145, 145, 0.1);
+}
+
+.modal-header {
+    border-bottom: 2px solid #007bff;
+}
+
+.modal-title {
+    font-size: 1.25rem;
+}
+
+input, textarea {
+    border-radius: 8px;
+}
+
+input:focus, textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
