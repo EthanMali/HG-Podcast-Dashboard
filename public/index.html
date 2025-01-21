@@ -30,6 +30,18 @@
         .modal-backdrop {
             background-color: rgba(0, 0, 0, 0.5);
         }
+
+        /* Loading spinner style */
+        .spinner-border-custom {
+            width: 3rem;
+            height: 3rem;
+            border-width: 0.5em;
+            border-color: #ecf0f1 transparent transparent transparent;
+        }
+        .loading-container {
+            text-align: center;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -61,6 +73,11 @@
                 <div class="modal-body" id="welcomeMessage">
                     <!-- Welcome message will be populated here -->
                 </div>
+                <div class="loading-container" id="loadingContainer">
+                    <div class="spinner-border spinner-border-custom" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -84,10 +101,13 @@
                 // Store the username in a cookie
                 document.cookie = `username=${username}; path=/; max-age=${60 * 60 * 24 * 30}`; // Cookie expires in 30 days
                 
-                // Show welcome modal
+                // Show welcome modal and display loading animation
                 document.getElementById('welcomeMessage').textContent = `Welcome Back, ${username}!`;
                 const welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal'));
                 welcomeModal.show();
+
+                // Show loading animation
+                document.getElementById('loadingContainer').style.display = 'block';
 
                 // Redirect after 3 seconds (for a smooth transition)
                 setTimeout(() => {
