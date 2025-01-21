@@ -8,6 +8,6 @@
   "dependencies": {
     "express": "^4.17.1",
     "cors": "^2.8.5",
-    "bcrypt": "^5.0.1"  // Added bcrypt dependency
+    "bcrypt": "^5.0.1" 
   }
 }
